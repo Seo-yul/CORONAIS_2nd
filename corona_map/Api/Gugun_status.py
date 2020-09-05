@@ -5,18 +5,30 @@ import datetime
 
 import corona_map.MongoDbManager as DBmanager
 
+
+"""
+    Title: Gugun_status.py
+    Detail: 구 데이터의 crawling, Create, Retrieve
+    Last-Modified: 20-09-05
+    Author:	윤서율
+    Created: 20-08-19
+"""
+
+
 def crawling_seoul_gu_state_dict(gugun_info_dict) -> dict:
-    '''
-     get_seoul_gu_state_dict 실제로 크롤링이 작동하는 함수
+
+    """
+     crawling_seoul_gu_state_dict 실제로 크롤링이 작동하는 함수
      gugun_info_dict 크롤링을 위한 데이터 파라미터
-    '''
+     return seoul_data_dict 크롤링된 데이터 dict형 데이터
+    """
 
     def_cnt_int = None  # 확진자 수 (총 확진자)  DB : DEF_CNT
-    isol_clear_cnt_int = None  # 격리 해제 수(총 완치자) DB : ISOL_CLEAR_CNT
-    isol_ing_cnt_int = None  # 격리중 환자수(현재확진자수) DB : ISOL_ING_CNT
+    isol_clear_cnt_int = None  # 격리 해제 수(총 완치자) DB : isol_clear_cnt
+    isol_ing_cnt_int = None  # 격리중 환자수(현재확진자수) DB : isol_ing_cnt
     death_cnt_int = None  # 사망자 DB : DEATH_CNT
 
-    isol_clear_cnt_list = None  # 누적 완치자 크롤링 lsit
+    isol_clear_cnt_list = None  # 누적 완치자 크롤링 list
     def_cnt_list = None  # 누적 확진자 크롤링 list
     isol_ing_cnt_list = None  # 현재 확진자 크롤링 list
 
@@ -153,20 +165,22 @@ def crawling_seoul_gu_state_dict(gugun_info_dict) -> dict:
     gugun_data_dict = {
         'gubunsmall': gugun_name,
         'defcnt': def_cnt_int,
-        'isolingcnt':isol_ing_cnt_int,
-        'isolclearcnt':isol_clear_cnt_int,
-        'deathcnt':death_cnt_int
+        'isolingcnt': isol_ing_cnt_int,
+        'isolclearcnt': isol_clear_cnt_int,
+        'deathcnt': death_cnt_int
     }
     return gugun_data_dict
 
 def get_seoul_info_dict() -> dict:
+    """
+    get_seoul_info_dict : 서울 크롤링을 위한 dom 데이터
+    return : key 로 seoul, stdday 을 가지는 dict
+    """
     # http://ncov.mohw.go.kr/ 코로나 바이러스 감염증 중앙대책본부 통계 자료
 
-    seoul_gu_info_list = [] # 리턴되는 구,군 데이터 리스트
-    cities_data_list = [] # 크롤링 대상 데이터 리스트
+    seoul_gu_info_list = []      # 리턴되는 구,군 데이터 리스트
+    cities_data_list = []        # 크롤링 대상 데이터 리스트
 
-    city_url = 'https://www.seoul.go.kr/coronaV/coronaStatus.do'
-    city_name = '서울'
     # 0 종로구
     city_data_dict = {
         'gugun_url': 'https://www.jongno.go.kr/portalMain.do;jsessionid=WRbjo7mxihEc2FtUXnZ8KUhCfSD3fYAhm2iyQ17E3HY1FDdtV6TOPaw70mYWKyKW.was_servlet_engine1',
@@ -464,18 +478,18 @@ def get_seoul_info_dict() -> dict:
 
 
 def init_gugun_data() -> bool:
-    data_items_dict = get_seoul_info_dict()
+    data_items_dict = get_seoul_info_dict()      # 크롤링이 끝난 서울 데이터
     DBmanager.Infection_Smallcity().add_gugun_status_datas_on_collection(data_items_dict)
     return True
 
+
 def get_seoul_data_list() -> list:
-    now_date = int(datetime.datetime.now().strftime('%Y%m%d'))
-    sql_query_0 = {'stdday':now_date}
-    sql_query_1 = {'_id': 0}
+    now_date = int(datetime.datetime.now().strftime('%Y%m%d'))   # 현재 날짜
+    sql_query_0 = {'stdday': now_date}                           # mongoDB find sql의 query
+    sql_query_1 = {'_id': 0}                                     # mongoDB find sql의 projection
 
     cursor_obj = DBmanager.Infection_Smallcity().get_gugun_status_datas_from_collection(sql_query_0, sql_query_1)
-    cursor_objs_list = list(cursor_obj)
-    print(cursor_objs_list)
+    cursor_objs_list = list(cursor_obj)     # find 결과값
     seoul_gus_data_list = list()
 
     for obj_dict in cursor_objs_list:
@@ -484,12 +498,13 @@ def get_seoul_data_list() -> list:
             break
 
     return seoul_gus_data_list
+
 
 def get_seoul_yesterday_data_list() -> list:
-    timestamp = datetime.datetime.now() - datetime.timedelta(days=1)
-    find_date = int(timestamp.strftime('%Y%m%d'))
-    sql_query_0 = {'stdday': find_date}
-    sql_query_1 = {'_id': 0}
+    timestamp = datetime.datetime.now() - datetime.timedelta(days=1)    # 하루전날
+    find_date = int(timestamp.strftime('%Y%m%d'))                       #  find 문의 조건
+    sql_query_0 = {'stdday': find_date}                                 #  mongoDB find sql 의 query
+    sql_query_1 = {'_id': 0}                                            # mongoDB find sql의 projection
 
     cursor_obj = DBmanager.Infection_Smallcity().get_gugun_status_datas_from_collection(sql_query_0, sql_query_1)
 
@@ -502,6 +517,4 @@ def get_seoul_yesterday_data_list() -> list:
             seoul_gus_data_list = obj_dict['seoul']
             break
 
-    # print(seoul_gus_data_list)
     return seoul_gus_data_list
-
