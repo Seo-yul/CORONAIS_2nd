@@ -1,10 +1,6 @@
 import datetime
 import corona_map.MongoDbManager as comong
 
-
-
-
-
 '''
 # 작성자 : 최수녕
 # 함수 설명 : infection_city 테이블에서 id의 최댓값을 구하는 함수(가장 최근 날짜 구하기)
