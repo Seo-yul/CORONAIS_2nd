@@ -12,7 +12,7 @@ from corona_map.Api.Gugun_status_calc import get_seoul_calc_data_list
 def call_data_init(request):
     seoul_data_init()
     folium_data_init()
-    return render(request, 'corona_map/coIs_init.html', {'soup_data': 'call_data_init에서 넘어옴'})
+    return render(request, 'corona_map/coIs_init.html')
 
 
 def call_gugun_info(request):
@@ -25,7 +25,7 @@ def call_gugun_info(request):
 def cois_main(request):
     # 총 확진자수, 격리해제수, 검사진행수, 사망자수 구하기 위한 함수
     in_st_dict = infection_state_all_value()
-
+    print(in_st_dict)
     # 지역별 코로나 총확진자 현황
     item_list_result = infection_city_all_values()
     barCityAllKeys = item_list_result['i_city_all_key']
@@ -40,12 +40,10 @@ def cois_main(request):
     # 날자별 코로나 총확진자 현황
     item_state_all_result = infection_all_value()
     lineAllKeys = item_state_all_result['i_state_all_key']
-    print(lineAllKeys)
     before_lineAllKeys = list()
     for i in lineAllKeys:
         before_lineAllKeys.append(str(i)[4:6]+'.'+str(i)[6:])
     lineAllKeys = before_lineAllKeys
-    print(lineAllKeys)
 
     lineAllVals = item_state_all_result['i_state_all_value']
 

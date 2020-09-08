@@ -22,7 +22,10 @@ def get_seoul_calc_data_dict() -> dict():
     seoul_gu_yesterday_data_list = Gugun_status.get_seoul_yesterday_data_list()     # 어제 서울의 구 데이터 조회
 
     seoul_gu_calc_data_list = list()
+    print('오늘데이터')
     for new, old in zip(seoul_gu_data_list, seoul_gu_yesterday_data_list):      # 오늘의 데이터 생성
+
+        print(new)
         seoul_gu_calc_data_dict = dict()
         seoul_gu_calc_data_dict['gubunsmall'] = new['gubunsmall']            # 구/군명(한글)
         seoul_gu_calc_data_dict['defcnt'] = int(new['defcnt'])               # 확진자 수(총확진자 현재감염중 + 총 완치수 + 사망자 수)

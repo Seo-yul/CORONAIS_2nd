@@ -418,17 +418,6 @@ def get_seoul_info_dict() -> dict:
     }
     cities_data_list.append(city_data_dict)
 
-    # 21 강동구
-    city_data_dict = {
-        'gugun_url': 'https://www.gangdong.go.kr/',
-        'gugun_name': '강동구',
-        'isol_clear_cnt_tag': '#main-wrap > div.main-center > div.grey-box > ul > li.green > div.cont-right > p > strong',
-        'sub_isol_clear_cnt_tag': '',
-        'def_cnt_tag': '#main-wrap > div.main-center > div.grey-box > ul > li.red > div.cont-right > p > strong',
-        'isol_ing_cnt_tag': ''
-    }
-    cities_data_list.append(city_data_dict)
-
     # 22 관악구
     city_data_dict = {
         'gugun_url': 'http://www.gwanak.go.kr/site/gwanak/main.do',
@@ -451,8 +440,29 @@ def get_seoul_info_dict() -> dict:
     }
     cities_data_list.append(city_data_dict)
 
+    # 크롤링한다.
     for city_data_dict in cities_data_list:
         seoul_gu_info_list.append(crawling_seoul_gu_state_dict(city_data_dict))
+
+    # 21 번 강동구가 제이슨으로 변경
+    gugun_url = 'https://www.gangdong.go.kr/js/corona_tot.js'
+    res_headers = {
+        'contentType':'application/json; charset=UTF-8',
+        'dataType':'text',
+        'Referer':'https://www.gangdong.go.kr/web/portal/ko.do'
+    }
+    gugun_name = '강동구'
+    res = requests.get(gugun_url, headers = res_headers)
+    gangdong_data_dict = dict(res.json())
+    gangdong_data_from_json_dict = {
+        'gubunsmall': gugun_name,
+        'defcnt': int(gangdong_data_dict['confirmed']),
+        'isolingcnt':  int(gangdong_data_dict['confirmed'])-int(gangdong_data_dict['cure']),
+        'isolclearcnt': int(gangdong_data_dict['cure']),
+        'deathcnt': int(gangdong_data_dict['dead'])
+    }
+
+    seoul_gu_info_list.append(gangdong_data_from_json_dict)
 
     gugun_url = 'http://www.gangnam.go.kr/etc/json/covid19.json'
     gugun_name = '강남구'
@@ -509,6 +519,7 @@ def get_seoul_yesterday_data_list() -> list:
     cursor_obj = DBmanager.Infection_Smallcity().get_gugun_status_datas_from_collection(sql_query_0, sql_query_1)
 
     cursor_objs_list = list(cursor_obj)
+    print('어제 데이터')
     print(cursor_objs_list)
     seoul_gus_data_list = list()
 

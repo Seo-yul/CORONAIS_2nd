@@ -90,7 +90,6 @@ def infection_state_all_value():
         now_date = int(timestamp.strftime('%Y%m%d'))
     # 하루의 시도별 데이터
     infection_date_data = comong.Infection_Status().get_users_from_collection({'id': now_date})
-
     item_dict = {}
     for idd in infection_date_data:
         # 확진자 수
