@@ -6,19 +6,12 @@ from corona_map.Api.Infection_status import infection_state_all_value
 from corona_map.Api.Infection_city import infection_city_gubun_defcnt
 from corona_map.Api.main_data_graph_function import infection_city_all_values, infection_city_oneday_values, infection_all_value, infection_oneday_value, infection_by_age_all_value, infection_by_gender_all_value
 from corona_map.Api.data_init import seoul_data_init, folium_data_init
-from corona_map.Api.Gugun_status_calc import get_seoul_calc_data_list
 
 # 데이터 init 함수
 def call_data_init(request):
     seoul_data_init()
-    # folium_data_init()
+    folium_data_init()
     return render(request, 'corona_map/coIs_init.html')
-
-
-def call_gugun_info(request):
-    data = get_seoul_calc_data_list()
-    return render(request, 'corona_map/coIs_init.html', {'soup_data': data})
-
 
 # 템플릿 적용
 # infection_state_all_value() 함수 사용

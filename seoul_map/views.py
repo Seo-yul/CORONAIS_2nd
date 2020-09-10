@@ -1,9 +1,38 @@
 import json
 import folium
 from django.shortcuts import render
+from django.http import HttpResponse
+
 from corona_map.Api.Gugun_status_calc import get_seoul_calc_data_list, get_daily_incdec_list, get_seoul_total_data_dict
 
+
+def seoul_gu_json(request, gubunsmall):
+    seoul_list = get_seoul_calc_data_list()
+    for data in seoul_list:
+        if data['gubunsmall'] == gubunsmall:
+            send_json_data = data
+            break
+        else:
+            send_json_data = {}
+    return HttpResponse([send_json_data], content_type="application/json; charset=utf-8" )
+
+
+def seoul_json(request):
+    seoul_total_data = get_seoul_total_data_dict()
+    seoul_data_dict = {
+        'defcnt': seoul_total_data['defcnt'],
+        'isolclearcnt': seoul_total_data['isolclearcnt'],
+        'isolingcnt': seoul_total_data['isolingcnt'],
+        'deathcnt': seoul_total_data['deathcnt']
+    }
+
+    return HttpResponse(json.dumps(seoul_data_dict), content_type="text/json-comment-filtered")
+
 def seoul_main(request):
+    """
+    작성 : 윤서율
+
+    """
     seoul_total_data = get_seoul_total_data_dict()
     daily_gu_all_data_list = get_daily_incdec_list()
     datetime_list = list()
@@ -41,6 +70,10 @@ def seoul_main(request):
 
 # 서울 지도
 def seoul_map(request):
+    """
+    작성 : 이지은
+    
+    """
     # 중심위치 잡아서 지도보여주기 위한 변수 입력.
     m = folium.Map([37.562600, 126.991732], zoom_start=12)
 

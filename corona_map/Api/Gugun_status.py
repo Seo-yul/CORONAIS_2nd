@@ -56,19 +56,19 @@ def crawling_seoul_gu_state_dict(gugun_info_dict) -> dict:
     if 200 <= res.status_code < 400:
         html = res.text
         soup = BeautifulSoup(html, 'html.parser')
-
+        print(gugun_name)
         if isol_clear_cnt_tag:
-            # print('isol_clear_cnt_tag 읽기 시도')
+            print('isol_clear_cnt_tag 읽기 시도')
             isol_clear_cnt_list = soup.select(isol_clear_cnt_tag)
-            # print(isol_clear_cnt_list)
+            print(isol_clear_cnt_list)
         if def_cnt_tag:
-            # print('def_cnt_tag 읽기 시도')
+            print('def_cnt_tag 읽기 시도')
             def_cnt_list = soup.select(def_cnt_tag)
-            # print(def_cnt_list)
+            print(def_cnt_list)
         if isol_ing_cnt_tag:
-            # print('isol_ing_cnt_tag 읽기 시도')
+            print('isol_ing_cnt_tag 읽기 시도')
             isol_ing_cnt_list = soup.select(isol_ing_cnt_tag)
-            # print(isol_ing_cnt_list)
+            print(isol_ing_cnt_list)
 
         try:
             if gugun_name == '영등포구':
@@ -200,10 +200,10 @@ def get_seoul_info_dict() -> dict:
     city_data_dict = {
         'gugun_url': 'http://www.junggu.seoul.kr/index.jsp#',
         'gugun_name': '중구',
-        'isol_clear_cnt_tag': '#wrap > div.popup_container > div.virus_popup01 > div.popup_body > div > div.col_right.clearfix > div.r_inner_left > div > div > table > tbody > tr > td:nth-child(2)',
+        'isol_clear_cnt_tag': '.col_right.clearfix .sub_table1.popup_table tbody tr td:nth-child(2)',
         'sub_isol_clear_cnt_tag': '',
-        'def_cnt_tag': '#wrap > div.popup_container > div.virus_popup01 > div.popup_body > div > div.col_right.clearfix > div.r_inner_left > div > div > table > thead > tr:nth-child(1) > th:nth-child(1)',
-        'isol_ing_cnt_tag': '#wrap > div.popup_container > div.virus_popup01 > div.popup_body > div > div.col_right.clearfix > div.r_inner_left > div > div > table > tbody > tr > td:nth-child(1)'
+        'def_cnt_tag': '.col_right.clearfix .sub_table1.popup_table tr th:nth-child(1)',
+        'isol_ing_cnt_tag': '.col_right.clearfix .sub_table1.popup_table tbody tr td:nth-child(1)'
     }
     cities_data_list.append(city_data_dict)
 
@@ -311,10 +311,10 @@ def get_seoul_info_dict() -> dict:
     city_data_dict = {
         'gugun_url': 'http://www.sdm.go.kr/index.do',
         'gugun_name': '서대문구',
-        'isol_clear_cnt_tag': '#relativeDiv > div.corona-popup.is-visible > div > div.corona-popup-number > ul > li:nth-child(2) > span',
+        'isol_clear_cnt_tag': '#wrapper > div.corona-popup.is-visible > div > div.corona-popup-number > ul > li:nth-child(2) > span',
         'sub_isol_clear_cnt_tag': '',
-        'def_cnt_tag': '#relativeDiv > div.corona-popup.is-visible > div > div.corona-popup-number > ul > li:nth-child(1) > span',
-        'isol_ing_cnt_tag': '#relativeDiv > div.corona-popup.is-visible > div > div.corona-popup-number > ul > li:nth-child(3) > span'
+        'def_cnt_tag': '#wrapper > div.corona-popup.is-visible > div > div.corona-popup-number > ul > li:nth-child(1) > span',
+        'isol_ing_cnt_tag': ''
     }
     cities_data_list.append(city_data_dict)
 
@@ -403,7 +403,7 @@ def get_seoul_info_dict() -> dict:
         'isol_clear_cnt_tag': '#wrap > div.covidNew > div > div.countList > ul > li.item3 > span.count > b',
         'sub_isol_clear_cnt_tag': '',
         'def_cnt_tag': '',
-        'isol_ing_cnt_tag': '#wrap > div.covidNew > div > div.countList > ul > li.item1 > span.count > b'
+        'isol_ing_cnt_tag': '#wrap > div.covidNew > div > div.countList > ul > li.item2 > span.count > b'
     }
     cities_data_list.append(city_data_dict)
 
