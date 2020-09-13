@@ -2,7 +2,8 @@ from corona_map.Api import Gugun_status
 from corona_map.Api import Gugun_status_calc
 
 from corona_map.Api import Infection_city, Infection_status, Infection_by_age_gender, News_board
-
+from bs4 import BeautifulSoup
+import requests
 """
     Title: data_init.py
     Detail: database init function module

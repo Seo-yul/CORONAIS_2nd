@@ -374,14 +374,14 @@ def get_seoul_info_dict() -> dict:
     }
     cities_data_list.append(city_data_dict)
 
-    # 17 동작구
+    # 17 동작구 #coronaState_temp > div > table > tbody > tr > td:nth-child(1)
     city_data_dict = {
-        'gugun_url': 'http://www.dongjak.go.kr/',
+        'gugun_url': 'http://www.dongjak.go.kr/portal/main/coronaState.do?nttId=10212331',
         'gugun_name': '동작구',
-        'isol_clear_cnt_tag': '.intr_tb tr:nth-child(3) td',
+        'isol_clear_cnt_tag': 'td:nth-last-child(1)',
         'sub_isol_clear_cnt_tag': '',
-        'def_cnt_tag': '',
-        'isol_ing_cnt_tag': '.intr_tb tr:nth-child(1) td'
+        'def_cnt_tag': 'td:nth-last-child(3)',
+        'isol_ing_cnt_tag': ''
     }
     cities_data_list.append(city_data_dict)
 
