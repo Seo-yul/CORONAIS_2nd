@@ -92,7 +92,7 @@ def get_seoul_total_data_dict() -> dict:
     seoul_total_dict = {'defcnt':0,'isolingcnt':0,'isolclearcnt':0,'deathcnt':0}
     for seoul_gugun in seoul_total:
         seoul_total_dict['defcnt'] += seoul_gugun['defcnt']
-        if seoul_gugun['gubunsmall'] is '강남구':
+        if seoul_gugun['gubunsmall'] == '강남구':
             continue
         seoul_total_dict['isolingcnt'] += seoul_gugun['isolingcnt']
         seoul_total_dict['isolclearcnt'] += seoul_gugun['isolclearcnt']

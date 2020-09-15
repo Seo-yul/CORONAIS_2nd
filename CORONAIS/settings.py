@@ -20,12 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+vt!w*$b(8s1i!2#k@y9#ls2a*2ol_qv(y224(fb7&cnbb&kl$'
-
+SECRET_KEY = ''
+with open(os.path.join(BASE_DIR,'www_dir','secret_key.txt')) as f:
+    SECRET_KEY = f.read().strip()
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -79,12 +80,8 @@ WSGI_APPLICATION = 'CORONAIS.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'coronais', # DB명
-        'USER': 'coronais', # 데이터베이스 계정
-        'PASSWORD': 'coronais', # 계정 비밀번호
-        'HOST': 'mongodb+srv://coronais:1q2w3e4r@cluster0.uy7ix.mongodb.net/coronais?retryWrites=true&w=majority', # 데이테베이스 IP
-        'PORT': '27017', # 데이터베이스 port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db', 'db.sqlite3'), # DB
      }
 }
 
@@ -125,4 +122,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
+STATIC_ROOT = os.path.join(BASE_DIR, 'www_dir','static')

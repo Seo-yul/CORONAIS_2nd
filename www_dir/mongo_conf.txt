@@ -1,0 +1,1 @@
+mongodb+srv://coronais:1q2w3e4r@cluster0.uy7ix.mongodb.net/coronais?retryWrites=true&w=majority

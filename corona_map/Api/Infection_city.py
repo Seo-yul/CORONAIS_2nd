@@ -30,7 +30,7 @@ def infection_city():
 
     if res.status_code == 200:
         html = res.text
-        if html is '':
+        if html == "":
             return print('오늘 데이터가 업데이트 되지 않았습니다.')
         print('html',html)
         soup = BeautifulSoup(html, 'html.parser')
