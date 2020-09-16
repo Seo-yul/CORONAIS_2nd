@@ -78,6 +78,7 @@ WSGI_APPLICATION = 'CORONAIS.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 파일 입출력으로 변경예정
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'coronais', # DB명
