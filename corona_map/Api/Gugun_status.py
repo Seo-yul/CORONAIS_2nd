@@ -422,10 +422,10 @@ def get_seoul_info_dict() -> dict:
     city_data_dict = {
         'gugun_url': 'http://www.gwanak.go.kr/site/gwanak/main.do',
         'gugun_name': '관악구',
-        'isol_clear_cnt_tag': '.f td:nth-last-child(1)',
+        'isol_clear_cnt_tag': '.state_covid .line-lft-td:nth-child(3)',
         'sub_isol_clear_cnt_tag': '',
-        'def_cnt_tag': '.f td:nth-last-child(3)',
-        'isol_ing_cnt_tag': '.f td:nth-last-child(2)'
+        'def_cnt_tag': '.state_covid .ftc-red',
+        'isol_ing_cnt_tag': '.state_covid .line-lft-td:nth-child(2)'
     }
     cities_data_list.append(city_data_dict)
 
