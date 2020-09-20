@@ -11,7 +11,7 @@ from corona_map.Api.data_init import seoul_data_init, folium_data_init
 def call_data_init(request):
     seoul_data_init()
     folium_data_init()
-    return render(request, 'corona_map/coIs_init.html')
+    return cois_main(request)
 
 # 템플릿 적용
 # infection_state_all_value() 함수 사용
