@@ -94,9 +94,3 @@ python manage.py migrate
 ```python
 client = pymongo.MongoClient(host='localhost', port=27017)
 ```
-
-# 남은 작업
-1. 전국 시, 군, 구 별 현황.
-데이터가 너무 많아 아직 서울시만 제공..
-2. 각 데이터를 API로 제공.
-3. 2.번의 API를 이용한 챗봇 기능 
